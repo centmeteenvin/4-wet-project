@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "firestore")
+@ComponentScan(basePackages = "firestore", basePackageClasses = Controller.class)
 public class ApiApplication {
 
 	public static void main(String[] args) {

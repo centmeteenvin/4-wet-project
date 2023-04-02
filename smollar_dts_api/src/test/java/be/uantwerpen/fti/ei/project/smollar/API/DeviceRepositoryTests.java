@@ -1,7 +1,5 @@
 package be.uantwerpen.fti.ei.project.smollar.API;
 
-import com.google.api.client.util.DateTime;
-import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.GeoPoint;
 import firestore.Device;
@@ -12,13 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootTest
-class ApiApplicationTests {
+class DeviceRepositoryTests {
 	@Autowired
 	private Firestore firestore;
 	@Test
