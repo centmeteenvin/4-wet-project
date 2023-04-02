@@ -30,7 +30,7 @@ public class FireStoreConfiguration {
                 FirestoreOptions options = FirestoreOptions.newBuilder().setCredentials(credentials).build();
                 log.info("Firestore successfully loaded");
                 return options.getService();
-                
+
             } catch (IOException e) {
                 log.error("The API service account file is not present");
                 throw new RuntimeException();
