@@ -1,4 +1,4 @@
-package firestore;
+package be.uantwerpen.fti.ei.project.smollar.API.models;
 
 import com.google.api.client.util.DateTime;
 import com.google.cloud.Timestamp;
@@ -13,15 +13,15 @@ public class Device {
     @DocumentId
     private String deviceId;
     private String deviceName;
-    private ArrayList<Map<String, GeoPoint>> locations;
+    private ArrayList<SpaceTimeStamp> locations;
 
-    public Device(String deviceId, String deviceName, ArrayList<Map<String, GeoPoint>> locations) {
+    public Device(String deviceId, String deviceName, ArrayList<SpaceTimeStamp> locations) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.locations = locations;
     }
 
-    public Device(String deviceName, ArrayList<Map<String, GeoPoint>> locations) {
+    public Device(String deviceName, ArrayList<SpaceTimeStamp> locations) {
         this.deviceId = UUID.randomUUID().toString();
         this.deviceName = deviceName;
         this.locations = locations;
@@ -52,11 +52,11 @@ public class Device {
         this.deviceName = deviceName;
     }
 
-    public ArrayList<Map<String, GeoPoint>> getLocations() {
+    public ArrayList<SpaceTimeStamp> getLocations() {
         return locations;
     }
 
-    public void setLocations(ArrayList<Map<String, GeoPoint>> locations) {
+    public void setLocations(ArrayList<SpaceTimeStamp> locations) {
         this.locations = locations;
     }
 }

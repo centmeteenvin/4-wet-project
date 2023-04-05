@@ -1,23 +1,21 @@
-package be.uantwerpen.fti.ei.project.smollar.API;
+package be.uantwerpen.fti.ei.project.smollar.API.controllers;
 
+import be.uantwerpen.fti.ei.project.smollar.API.models.SpaceTimeStamp;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.GeoPoint;
-import firestore.Device;
-import firestore.DeviceRepository;
+import be.uantwerpen.fti.ei.project.smollar.API.models.Device;
+import be.uantwerpen.fti.ei.project.smollar.API.repositories.DeviceRepository;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
-public class Controller {
+public class DeviceController {
 
     private DeviceRepository deviceRepository;
 
-    public Controller(Firestore firestore) {
+    public DeviceController(Firestore firestore) {
         this.deviceRepository = new DeviceRepository(firestore);
     }
 
@@ -43,13 +41,14 @@ public class Controller {
     }
 
     @PatchMapping("/devices/{deviceId}")
-    public ResponseEntity updateLocations(@PathVariable String deviceId, @RequestBody Map<String, String> body) {
+    public ResponseEntity updateLocations(@PathVariable String deviceId, @RequestBody ArrayList<SpaceTimeStamp> spaceTimeStamps) {
         Device device = deviceRepository.get(deviceId);
-        ArrayList<Map<String, GeoPoint>> locations = device.getLocations();
-        HashMap<String, GeoPoint> newLocationEntry = new HashMap<>(1);
-        newLocationEntry.put(body.get("timeStamp"), new GeoPoint(Double.parseDouble(body.get("latitude")), Double.parseDouble(body.get("longitude"))));
-        locations.add(newLocationEntry);
-        if (deviceRepository.save(device)) return new ResponseEntity<Device>(device, HttpStatusCode.valueOf(200));
+        ArrayList<SpaceTimeStamp> locations = device.getLocations();
+        locations.addAll(spaceTimeStamps);
+
+        if (deviceRepository.save(device)) {
+            return new ResponseEntity<Device>(device, HttpStatusCode.valueOf(200));
+        }
         return new ResponseEntity<String>("Error in pushing resource to database", HttpStatusCode.valueOf(500));
     }
 
