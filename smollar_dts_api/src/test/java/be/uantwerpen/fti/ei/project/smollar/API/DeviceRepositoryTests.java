@@ -1,6 +1,7 @@
 package be.uantwerpen.fti.ei.project.smollar.API;
 
 import be.uantwerpen.fti.ei.project.smollar.API.models.SpaceTimeStamp;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.GeoPoint;
 import be.uantwerpen.fti.ei.project.smollar.API.models.Device;
@@ -23,18 +24,21 @@ class DeviceRepositoryTests {
 	void contextLoads() {
 		DeviceRepository repository = new DeviceRepository(firestore);
 		ArrayList<SpaceTimeStamp> locations = new ArrayList<>();
-		locations.add(new HashMap<>());
-		locations.get(0).put(LocalDateTime.now().toString(), new GeoPoint(54, 4));
+
+		locations.add(new SpaceTimeStamp(Timestamp.now(), new GeoPoint(54.0, 4.00)));
 		Device device = new Device("Test Device", locations);
-		System.out.println(device);
 		boolean result = repository.save(device);
 		Assertions.assertTrue(result);
+
 		Device receivedDevice = repository.get(device.getDeviceId());
-		Assertions.assertEquals(device.toString(), receivedDevice.toString());
+		Assertions.assertEquals(device, receivedDevice);
+
 		result = repository.delete(device.getDeviceId());
 		Assertions.assertTrue(result);
+
 		result = repository.delete("foo");
 		Assertions.assertFalse(result);
+
 		device = repository.get(device.getDeviceId());
 		Assertions.assertNull(device);
 	}

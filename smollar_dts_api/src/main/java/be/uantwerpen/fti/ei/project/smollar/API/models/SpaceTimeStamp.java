@@ -12,6 +12,20 @@ public class SpaceTimeStamp {
         this.coordinate = coordinate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SpaceTimeStamp that = (SpaceTimeStamp) o;
+
+        if (timestamp.getSeconds() != that.timestamp.getSeconds()) return false;
+        if (coordinate.getLatitude() != that.coordinate.getLatitude()) return false;
+        return coordinate.getLongitude() == that.coordinate.getLongitude();
+    }
+
+
+
     public GeoPoint getCoordinate() {
         return coordinate;
     }
@@ -26,6 +40,14 @@ public class SpaceTimeStamp {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "SpaceTimeStamp{" +
+                "timestamp=" + timestamp +
+                ", coordinate=" + coordinate +
+                '}';
     }
 
 }
