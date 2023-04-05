@@ -3,12 +3,15 @@ package be.uantwerpen.fti.ei.project.smollar.API.repositories;
 import be.uantwerpen.fti.ei.project.smollar.API.models.Device;
 import be.uantwerpen.fti.ei.project.smollar.API.models.SpaceTimeStamp;
 import com.google.api.core.ApiFuture;
+import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class DeviceRepository {
@@ -38,10 +41,16 @@ public class DeviceRepository {
         try {
             DocumentSnapshot documentSnapshot = snapshotApiFuture.get();
             if (documentSnapshot.exists()) {
+
+                ArrayList<HashMap<String, Object>> receivedLocations = (ArrayList<HashMap<String, Object>>) documentSnapshot.get("locations");
+                ArrayList<SpaceTimeStamp> spaceTimePointLocations = receivedLocations.stream().map(stringObjectHashMap -> {
+                    return new SpaceTimeStamp((Timestamp) stringObjectHashMap.get("timestamp"), (GeoPoint) stringObjectHashMap.get("coordinate"));
+                }).collect(Collectors.toCollection(ArrayList::new));
+
                 return new Device(
                         deviceId,
                         documentSnapshot.get("deviceName").toString(),
-                        (ArrayList<SpaceTimeStamp>) documentSnapshot.get("locations")
+                        spaceTimePointLocations
                 );
             }
         } catch (ExecutionException | InterruptedException e) {

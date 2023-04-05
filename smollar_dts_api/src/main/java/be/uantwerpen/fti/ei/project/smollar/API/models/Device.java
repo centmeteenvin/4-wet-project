@@ -15,10 +15,34 @@ public class Device {
     private String deviceName;
     private ArrayList<SpaceTimeStamp> locations;
 
+    public Device() {
+        this("", "", new ArrayList<>());
+    }
+
     public Device(String deviceId, String deviceName, ArrayList<SpaceTimeStamp> locations) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.locations = locations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Device device = (Device) o;
+
+        if (!deviceId.equals(device.deviceId)) return false;
+        if (!deviceName.equals(device.deviceName)) return false;
+        return locations.equals(device.locations);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = deviceId.hashCode();
+        result = 31 * result + deviceName.hashCode();
+        result = 31 * result + locations.hashCode();
+        return result;
     }
 
     public Device(String deviceName, ArrayList<SpaceTimeStamp> locations) {
