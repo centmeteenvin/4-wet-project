@@ -1,4 +1,4 @@
-package firestore;
+package be.uantwerpen.fti.ei.project.smollar.API.configurations;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;

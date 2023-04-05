@@ -1,7 +1,8 @@
-package firestore;
+package be.uantwerpen.fti.ei.project.smollar.API.repositories;
 
+import be.uantwerpen.fti.ei.project.smollar.API.models.Device;
+import be.uantwerpen.fti.ei.project.smollar.API.models.SpaceTimeStamp;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +41,7 @@ public class DeviceRepository {
                 return new Device(
                         deviceId,
                         documentSnapshot.get("deviceName").toString(),
-                        (ArrayList<Map<String, GeoPoint>>) documentSnapshot.get("locations")
+                        (ArrayList<SpaceTimeStamp>) documentSnapshot.get("locations")
                 );
             }
         } catch (ExecutionException | InterruptedException e) {

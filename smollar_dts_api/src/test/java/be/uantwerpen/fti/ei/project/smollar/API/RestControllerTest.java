@@ -1,10 +1,8 @@
 package be.uantwerpen.fti.ei.project.smollar.API;
 
-import com.google.cloud.firestore.GeoPoint;
-import firestore.Device;
+import be.uantwerpen.fti.ei.project.smollar.API.models.Device;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;

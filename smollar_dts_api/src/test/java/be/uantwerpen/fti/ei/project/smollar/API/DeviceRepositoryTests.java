@@ -1,9 +1,10 @@
 package be.uantwerpen.fti.ei.project.smollar.API;
 
+import be.uantwerpen.fti.ei.project.smollar.API.models.SpaceTimeStamp;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.GeoPoint;
-import firestore.Device;
-import firestore.DeviceRepository;
+import be.uantwerpen.fti.ei.project.smollar.API.models.Device;
+import be.uantwerpen.fti.ei.project.smollar.API.repositories.DeviceRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ class DeviceRepositoryTests {
 	@Test
 	void contextLoads() {
 		DeviceRepository repository = new DeviceRepository(firestore);
-		ArrayList<Map<String, GeoPoint>> locations = new ArrayList<>();
+		ArrayList<SpaceTimeStamp> locations = new ArrayList<>();
 		locations.add(new HashMap<>());
 		locations.get(0).put(LocalDateTime.now().toString(), new GeoPoint(54, 4));
 		Device device = new Device("Test Device", locations);
