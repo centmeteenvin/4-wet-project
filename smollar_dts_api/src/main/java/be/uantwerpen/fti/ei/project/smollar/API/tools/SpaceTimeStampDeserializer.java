@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.cloud.firestore.GeoPoint;
+import com.google.cloud.Timestamp;
 
 import java.io.IOException;
 
@@ -68,7 +69,7 @@ public class SpaceTimeStampDeserializer extends JsonDeserializer<SpaceTimeStamp>
         double longitude = node.get("coordinate").get("longitude").asDouble();
         GeoPoint geoPoint = new GeoPoint(latitude, longitude);
 
-        String RFC3339TimeString = node.get("timestamp").asText();
-        return new SpaceTimeStamp(RFC3339TimeString, geoPoint);
+        int seconds = node.get("timestamp").get("seconds").asInt();
+        return new SpaceTimeStamp(Timestamp.ofTimeSecondsAndNanos(seconds, 0), geoPoint);
     }
 }
