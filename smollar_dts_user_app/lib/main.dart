@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:smollar_dts/utils/routes.dart';
+import 'package:smollar_dts/pages/routes.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 void main() async {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-      initialRoute: "/home",
+      initialRoute: "/login",
     );
   }
 }

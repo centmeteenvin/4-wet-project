@@ -3,7 +3,7 @@
    <application
         android:label="Smollar DTS"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBuGnQtw49ibNuy7lO760V8c1HZbGFQsTU"
