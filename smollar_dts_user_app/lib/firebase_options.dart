@@ -53,10 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDzi4Iz_Ne9Q0yEMEPPiUdDUX4kNpXy888',
-    appId: '1:657472140774:android:e17e1a826932282f939227',
-    messagingSenderId: '657472140774',
-    projectId: 'smollar-dts',
-    storageBucket: 'smollar-dts.appspot.com',
+    apiKey: 'AIzaSyDBCoFSH9KyB1qf1PVkAr8hJC_Nn8t2RBk',
+    appId: '1:964505854575:android:bfd88695c7f0092685239a',
+    messagingSenderId: '964505854575',
+    projectId: 'smollar-dts-ff2fc',
+    storageBucket: 'smollar-dts-ff2fc.appspot.com',
   );
 }
