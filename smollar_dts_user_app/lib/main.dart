@@ -2,6 +2,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:smollar_dts/pages/home/home_page.dart';
 import 'package:smollar_dts/pages/login/login_page.dart';
 import 'package:smollar_dts/pages/routes.dart';
 import 'package:smollar_dts/utils/auth/auth.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Center(child: Text(snapshot.error.toString()));
             } else if (snapshot.hasData) {
-              return Text(snapshot.data.toString());
+              return const HomePage();
             }
             return const LoginPage();
           },
