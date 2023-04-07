@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -14,6 +15,7 @@ import 'package:flutter/foundation.dart'
 ///   options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
+final firebaseApiKey = dotenv.get("FIREBASE_API_KEY");
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
@@ -52,8 +54,8 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDBCoFSH9KyB1qf1PVkAr8hJC_Nn8t2RBk',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: firebaseApiKey,
     appId: '1:964505854575:android:bfd88695c7f0092685239a',
     messagingSenderId: '964505854575',
     projectId: 'smollar-dts-ff2fc',
