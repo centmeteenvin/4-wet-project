@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smollar_dts/pages/home/home_page.dart';
 import 'package:smollar_dts/pages/login/login_page.dart';
 import 'package:smollar_dts/pages/routes.dart';
-import 'package:smollar_dts/utils/auth/auth.dart';
+import 'package:smollar_dts/utils/services/auth.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

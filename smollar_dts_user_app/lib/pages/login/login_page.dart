@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smollar_dts/utils/auth/auth.dart';
+import 'package:smollar_dts/utils/services/auth.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
