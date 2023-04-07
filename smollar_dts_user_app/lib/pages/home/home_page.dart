@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      return Text(snapshot.data![index]["deviceName"]);
+                      return Text(snapshot.data![index].toString());
                     },
                   );
                 } else if (snapshot.hasError) {
