@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'home/homePage.dart';
-import 'login/loginPage.dart';
+import 'home/home_page.dart';
+import 'login/login_page.dart';
 
 Map<String, Widget Function(BuildContext context)> routes = {
   "/home": (context) => const HomePage(),
