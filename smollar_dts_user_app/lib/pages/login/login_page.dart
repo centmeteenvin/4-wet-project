@@ -30,7 +30,14 @@ class LoginPage extends StatelessWidget {
              child: const Text(
               "Sign in with Google"
              ), 
-             ),
+          ),
+
+          TextButton(
+            onPressed: () => AuthService().signInAnonymous(),
+            child: const Text(
+              "Sign in Anonymously"
+            ),
+          ),
         ],
       ),
     );

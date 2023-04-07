@@ -30,4 +30,20 @@ class AuthService {
     }
   }
 
+  Future<void> signInAnonymous() async {
+    try {
+      await firebaseAuth.signInAnonymously();
+    } on Exception catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await firebaseAuth.signOut();
+    } on Exception catch (e) {
+      log(e.toString());
+    }
+  }
+
 }
