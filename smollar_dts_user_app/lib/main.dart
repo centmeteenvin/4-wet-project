@@ -1,13 +1,18 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:smollar_dts/pages/login/login_page.dart';
 import 'package:smollar_dts/pages/routes.dart';
+import 'package:smollar_dts/utils/auth/auth.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
-  await dotenv.load();  
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -26,7 +31,21 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-      initialRoute: "/login",
+      builder: (context, child) {
+        return StreamBuilder(
+          stream: AuthService().userStream,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Center(child: Text(snapshot.error.toString()));
+            } else if (snapshot.hasData) {
+              return Text(snapshot.data.toString());
+            }
+            return const LoginPage();
+          },
+        );
+      },
     );
   }
 }
