@@ -32,21 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routes,
-      builder: (context, child) {
-        return StreamBuilder(
-          stream: AuthService().userStream,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return Center(child: Text(snapshot.error.toString()));
-            } else if (snapshot.hasData) {
-              return const HomePage();
-            }
-            return const LoginPage();
-          },
-        );
-      },
+      initialRoute: "/home"
     );
   }
 }
