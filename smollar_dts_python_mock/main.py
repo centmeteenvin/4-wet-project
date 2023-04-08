@@ -1,8 +1,11 @@
 import logging
 import time
 import multiprocessing
+from typing import List
 
 import requests
+import geocoder
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 baseUrl = "https://smollar-dts-api-gi3nbcbadq-ew.a.run.app/api/v1/devices/"
@@ -18,9 +21,11 @@ def deleteDevice(deviceName):
 
 def updateDevice(deviceName, data):
     response = requests.patch(url=baseUrl + deviceName, json=data)
-    logger.info(response.text)
+    logger.info(f"updated location to {data[0]['coordinate']} at {data[0]['timestamp']}")
 
 def mocking():
+    initialLocation : List[float] = geocoder.ip("me").latlng
+    i : float = 0
     while(True):
         data = {
             "timestamp":{
@@ -28,12 +33,13 @@ def mocking():
                 "nanos": 0,
             },
             "coordinate":{
-                "latitude":51.0,
-                "longitude":4.0,
+                "latitude": initialLocation[0] + i,
+                "longitude":initialLocation[1] + i,
             },
         }
         updateDevice(DEVICE_NAME, [data])
-        time.sleep(1)
+        i = i + 0.2
+        time.sleep(4)
 
 def main(): 
     createDevice(DEVICE_NAME)
