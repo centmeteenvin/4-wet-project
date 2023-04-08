@@ -29,7 +29,7 @@ class DeviceSelector extends ConsumerWidget {
                       onPressed: () {
                         Device device = snapshot.data![index];
                         ref.read(currentDeviceProvider.notifier).set(device);
-
+                        Navigator.pushNamed(context, "/device");
                       },
                       child: Text(snapshot.data?[index].deviceName ?? "empty"),
                     );
