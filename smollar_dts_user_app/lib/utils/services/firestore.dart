@@ -31,7 +31,14 @@ class FirestoreService {
 
   Stream<List<SpaceTimePoint>> getLocationsStream(String deviceId) {
     var ref = _db.collection('Devices');
-    Stream<Device> deviceStream = ref.doc(deviceId).snapshots().asyncMap((event) => Device.fromMap(event.data()!));
-    return deviceStream.map((event) => event.locations,);
+    Stream<Device> deviceStream = ref
+        .doc(deviceId)
+        .snapshots()
+        .map((event) {
+          Map<String, dynamic> map = event.data() ?? {"deviceName": "DeviceNotFound", "locations":  []};
+          map["deviceId"] = event.id;
+          return Device.fromMap(map);
+        });
+    return deviceStream.map((event) => event.locations);
   }
 }
