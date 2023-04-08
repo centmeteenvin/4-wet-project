@@ -8,6 +8,7 @@ import '../../utils/models/device.dart';
 import 'device_selector.dart';
 
 final currentDeviceProvider = StateNotifierProvider<DeviceNotifier, Device?>((ref) => DeviceNotifier(null) );
+final deviceProvider = StreamNotifierProvider<DeviceListNotifier, List<Device>>(DeviceListNotifier.new);
 
 class Home extends StatelessWidget {
   const Home({super.key});
