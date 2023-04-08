@@ -1,34 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smollar_dts/utils/services/auth.dart';
-import 'package:smollar_dts/utils/services/firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../utils/models/device.dart';
+import 'package:smollar_dts/utils/models/device.dart';
+import 'package:smollar_dts/utils/services/firestore.dart';
 
-final currentDeviceProvider = StateNotifierProvider<DeviceNotifier, Device?>((ref) => DeviceNotifier(null) );
-
-class HomePage extends ConsumerWidget {
-  const HomePage({super.key});
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var currentDevice = ref.watch(currentDeviceProvider);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Smollar DTS"
-        ),
-        centerTitle: true,
-      ),
-      body: Builder(
-        builder: (context) {
-          if (currentDevice == null) return const DeviceSelector();
-          return Text(currentDevice.deviceId);
-        },
-      ),
-    );
-  }
-}
+import 'home_page.dart';
 
 class DeviceSelector extends ConsumerWidget {
   const DeviceSelector({super.key});
@@ -53,7 +28,7 @@ class DeviceSelector extends ConsumerWidget {
                     return TextButton(
                       onPressed: () {
                         Device device = snapshot.data![index];
-                        ref.read(currentDeviceProvider.notifier).state = device;
+                        ref.read(currentDeviceProvider.notifier).set(device);
 
                       },
                       child: Text(snapshot.data?[index].deviceName ?? "empty"),
