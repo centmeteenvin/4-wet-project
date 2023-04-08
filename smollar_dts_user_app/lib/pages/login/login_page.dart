@@ -27,14 +27,18 @@ class LoginPage extends ConsumerWidget {
           ),
 
           TextButton(
-            onPressed: () => AuthService().signInWithGoogle(),
+            onPressed: () {
+              AuthService().signInWithGoogle();
+            },
              child: const Text(
               "Sign in with Google"
              ), 
           ),
 
           TextButton(
-            onPressed: () => AuthService().signInAnonymous(),
+            onPressed: () {
+              AuthService().signInAnonymous();
+            },
             child: const Text(
               "Sign in Anonymously"
             ),
