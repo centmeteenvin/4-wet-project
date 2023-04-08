@@ -2,6 +2,8 @@ import logging
 import time
 import multiprocessing
 from typing import List
+import math
+import random
 
 import requests
 import geocoder
@@ -24,7 +26,7 @@ def updateDevice(deviceName, data):
     logger.info(f"updated location to {data[0]['coordinate']} at {data[0]['timestamp']}")
 
 def mocking():
-    initialLocation : List[float] = geocoder.ip("me").latlng
+    location : List[float] = geocoder.ip("me").latlng
     i : float = 0
     while(True):
         data = {
@@ -33,12 +35,14 @@ def mocking():
                 "nanos": 0,
             },
             "coordinate":{
-                "latitude": initialLocation[0] + i,
-                "longitude":initialLocation[1] + i,
+                "latitude": location[0],
+                "longitude": location[1],
             },
         }
         updateDevice(DEVICE_NAME, [data])
-        i = i + 0.2
+        angle = random.random() * math.pi/2
+        location[0] = location[0] + math.cos(angle) * 0.01
+        location[1] = location[1] + math.sin(angle) *0.01
         time.sleep(4)
 
 def main(): 
