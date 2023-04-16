@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smollar_dts/utils/services/firestore.dart';
 import 'space_time_point.dart';

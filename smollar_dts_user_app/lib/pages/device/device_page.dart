@@ -4,10 +4,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smollar_dts/pages/home/home_page.dart';
 import 'package:smollar_dts/utils/models/device.dart';
 import 'package:smollar_dts/utils/models/space_time_point.dart';
 import 'package:smollar_dts/utils/services/firestore.dart';
+
+import '../../utils/services/providers.dart';
 
 class DevicePage extends ConsumerStatefulWidget {
   const DevicePage({super.key});
@@ -40,7 +41,7 @@ class _DevicePageState extends ConsumerState<DevicePage> {
         }
         List<SpaceTimePoint> data = snapshot.data!;
         if (data.isEmpty) {
-          return Text("No Data To Display");
+          return const Text("No Data To Display");
         }
         Set<Marker> markers = {};
         _controller.future.then((googleMapController) => googleMapController.animateCamera(CameraUpdate.newLatLng(data.last.coordinate!)));

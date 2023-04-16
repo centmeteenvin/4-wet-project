@@ -28,6 +28,7 @@ class AuthService {
     } on Exception catch (e) {
       log(e.toString());
     }
+    return null;
   }
 
   Future<void> signInAnonymous() async {
