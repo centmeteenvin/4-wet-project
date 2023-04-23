@@ -103,7 +103,7 @@ public class DeviceController {
         return new ResponseEntity<Device>(device, HttpStatusCode.valueOf(201));
     }
 
-    @PatchMapping("/{deviceId}")
+    @PutMapping("/{deviceId}")
     @Operation(
             summary = "Add SpaceTimePoints",
             description = "Append one or more SpaceTimePoints to the give device",

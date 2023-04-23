@@ -47,7 +47,7 @@ public class RestControllerTest {
                 .andExpect(jsonPath("$.deviceName").value(device.getDeviceName()));
 
         ObjectMapper mapper = new ObjectMapper();
-        mvc.perform(patch("/api/v1/devices/" + device.getDeviceId())
+        mvc.perform(put("/api/v1/devices/" + device.getDeviceId())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("[\n" + mapper.writeValueAsString(spaceTimeStamp) + "\n]"))
                 .andExpect(status().isOk()

@@ -22,7 +22,7 @@ def deleteDevice(deviceName):
     logger.info(response.text)
 
 def updateDevice(deviceName, data):
-    response = requests.put(url=baseUrl + deviceName, json=data)
+    response = requests.patch(url=baseUrl + deviceName, json=data)
     logger.info(f"updated location to {data[0]['coordinate']} at {data[0]['timestamp']}")
 
 def mocking():
