@@ -14,15 +14,25 @@ public class Device {
     private String deviceId;
     private String deviceName;
     private ArrayList<SpaceTimeStamp> locations;
+    private boolean callBack;
 
     public Device() {
-        this("", "", new ArrayList<>());
+        this("", "", new ArrayList<>(), false);
     }
 
-    public Device(String deviceId, String deviceName, ArrayList<SpaceTimeStamp> locations) {
+    public boolean isCallBack() {
+        return callBack;
+    }
+
+    public void setCallBack(boolean callBack) {
+        this.callBack = callBack;
+    }
+
+    public Device(String deviceId, String deviceName, ArrayList<SpaceTimeStamp> locations, boolean callBack) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.locations = locations;
+        this.callBack = callBack;
     }
 
     @Override
@@ -56,7 +66,8 @@ public class Device {
         return "Device{" +
                 "deviceId='" + deviceId + '\'' +
                 ", deviceName='" + deviceName + '\'' +
-                ", locations=" + locations +
+                ", locations=" + locations + "'" +
+                ",callBack=" + callBack +
                 '}';
     }
 

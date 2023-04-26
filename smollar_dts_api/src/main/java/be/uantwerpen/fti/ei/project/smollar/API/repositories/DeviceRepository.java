@@ -50,7 +50,8 @@ public class DeviceRepository {
                 return new Device(
                         deviceId,
                         documentSnapshot.get("deviceName").toString(),
-                        spaceTimePointLocations
+                        spaceTimePointLocations,
+                        (Boolean) documentSnapshot.get("callBack")
                 );
             }
         } catch (ExecutionException | InterruptedException e) {

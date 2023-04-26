@@ -96,7 +96,7 @@ public class DeviceController {
         if (deviceRepository.get(deviceId) != null) {
             return new ResponseEntity<String>("Device already exists", HttpStatusCode.valueOf(409));
         }
-        Device device = new Device(deviceId, deviceName, new ArrayList<>());
+        Device device = new Device(deviceId, deviceName, new ArrayList<>(), false);
         boolean result = deviceRepository.save(device);
         if (!result)
             return new ResponseEntity<String>("Error in pushing resource to databse", HttpStatusCode.valueOf(500));
@@ -146,7 +146,7 @@ public class DeviceController {
         locations.addAll(spaceTimeStamps);
 
         if (deviceRepository.save(device)) {
-            return ResponseEntity.ok().build();
+            return new ResponseEntity<Boolean>(device.isCallBack(), HttpStatusCode.valueOf(200));
         }
         return new ResponseEntity<String>("Error in pushing resource to database", HttpStatusCode.valueOf(500));
     }
