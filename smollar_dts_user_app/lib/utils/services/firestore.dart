@@ -41,4 +41,9 @@ class FirestoreService {
         });
     return deviceStream.map((event) => event.locations);
   }
+
+  void callBack(String deviceId) {
+    var ref = _db.collection('Devices');
+    ref.doc(deviceId).update({"callBack":true});
+  }
 }

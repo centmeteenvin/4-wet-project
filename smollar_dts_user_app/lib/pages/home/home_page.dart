@@ -19,8 +19,7 @@ class Home extends ConsumerWidget {
         if (data != null) {
           return const HomePage();
         }
-        Navigator.pushNamed(context, "/login");
-        return const Center(child: CircularProgressIndicator(),);
+        return const LoginPage();
       },
       error: (error, stackTrace) {
         log(

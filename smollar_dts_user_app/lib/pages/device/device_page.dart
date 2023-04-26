@@ -54,23 +54,39 @@ class _DevicePageState extends ConsumerState<DevicePage> {
             )
           ));  
         }
-        return GoogleMap(
-          initialCameraPosition: CameraPosition(
-            target: data.last.coordinate!,
-            zoom: 11,
-          ),
-          markers: markers,
-          polylines: {
-            Polyline(
-              polylineId: PolylineId(currentDevice.deviceId.toString()),
-              points: data.map((e) => e.coordinate!).toList(),
-              color: Colors.purple,
-              geodesic: true,
-              jointType: JointType.round,
-              width: 4,
+        return Column(
+          children: [
+            Expanded(
+              flex: 2,
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                  target: data.last.coordinate!,
+                  zoom: 11,
+                ),
+                markers: markers,
+                polylines: {
+                  Polyline(
+                    polylineId: PolylineId(currentDevice.deviceId.toString()),
+                    points: data.map((e) => e.coordinate!).toList(),
+                    color: Colors.purple,
+                    geodesic: true,
+                    jointType: JointType.round,
+                    width: 4,
+                  ),
+                },
+                onMapCreated: (mapController) => _controller.complete(mapController),
+              ),
             ),
-          },
-          onMapCreated: (mapController) => _controller.complete(mapController),
+            Expanded(
+              flex: 1,
+              child: TextButton(
+                child: const Text("Come back!"),
+                onPressed:() {
+                  _currentDevice.callBack();
+                },
+              ),
+            ),
+          ],
         );
       },
     );
