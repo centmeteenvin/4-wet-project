@@ -4,10 +4,12 @@ import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
+  await Permission.location.request();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

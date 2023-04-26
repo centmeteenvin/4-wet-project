@@ -1,3 +1,6 @@
+import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
+import 'dart:ffi';
+
 import 'package:smollar_dts/utils/models/device.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,5 +48,10 @@ class FirestoreService {
   void callBack(String deviceId) {
     var ref = _db.collection('Devices');
     ref.doc(deviceId).update({"callBack":true});
+  }
+
+  void setFence(String deviceId, Fence fence) {
+    var ref = _db.collection('Devices');
+    ref.doc(deviceId).update({"fence": fence.toMap()});
   }
 }
