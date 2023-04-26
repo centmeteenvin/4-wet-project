@@ -9,7 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:location/location.dart';
+import 'package:audioplayers/audioplayers.dart';
 
+final player = AudioPlayer();
 final uuidProvider = FutureProvider<String>((ref) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   if (preferences.get("UUID") == null) {
@@ -23,6 +25,7 @@ final deviceNameProvider = StateProvider<String>(
 );
 final locationProvider = StateProvider<List<SpaceTimePoint>>((ref) => [],);
 final isRegisterd = StateProvider<bool>((ref) => false);
+final callBackProvider = StateProvider<bool>((ref) => false);
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,9 +56,10 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final uuid = ref.watch(uuidProvider);
     final deviceName = ref.watch(deviceNameProvider);
-    final backgroundColor = ref.watch(isRegisterd)
+    var backgroundColor = ref.watch(isRegisterd)
         ? Colors.purple.shade900
         : const ColorScheme.dark().background; 
+    if (ref.watch(callBackProvider)) backgroundColor = Colors.red;
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
@@ -136,6 +140,12 @@ class HomePage extends ConsumerWidget {
     log(response.body);
     if (response.statusCode == 200) {
       locations = [];
+      if (response.body == "true") {
+        ref.read(callBackProvider.notifier).state = true;
+        log("playing callback sound");
+        await player.play(AssetSource("sound.mp3"));
+      }
+
     }
     ref.watch(locationProvider.notifier).state = locations;
 }
