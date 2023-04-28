@@ -15,24 +15,20 @@ public class Device {
     private String deviceName;
     private ArrayList<SpaceTimeStamp> locations;
     private boolean callBack;
+    private Fence fence;
+
 
     public Device() {
-        this("", "", new ArrayList<>(), false);
+        this("", "", new ArrayList<>(), false, new Fence());
     }
 
-    public boolean isCallBack() {
-        return callBack;
-    }
 
-    public void setCallBack(boolean callBack) {
-        this.callBack = callBack;
-    }
-
-    public Device(String deviceId, String deviceName, ArrayList<SpaceTimeStamp> locations, boolean callBack) {
+    public Device(String deviceId, String deviceName, ArrayList<SpaceTimeStamp> locations, boolean callBack, Fence fence) {
         this.deviceId = deviceId;
         this.deviceName = deviceName;
         this.locations = locations;
         this.callBack = callBack;
+        this.fence = fence;
     }
 
     @Override
@@ -59,6 +55,7 @@ public class Device {
         this.deviceId = UUID.randomUUID().toString();
         this.deviceName = deviceName;
         this.locations = locations;
+        this.fence = new Fence();
     }
 
     @Override
@@ -93,5 +90,19 @@ public class Device {
 
     public void setLocations(ArrayList<SpaceTimeStamp> locations) {
         this.locations = locations;
+    }
+    public Fence getFence() {
+        return fence;
+    }
+
+    public void setFence(Fence fence) {
+        this.fence = fence;
+    }
+    public boolean isCallBack() {
+        return callBack;
+    }
+
+    public void setCallBack(boolean callBack) {
+        this.callBack = callBack;
     }
 }

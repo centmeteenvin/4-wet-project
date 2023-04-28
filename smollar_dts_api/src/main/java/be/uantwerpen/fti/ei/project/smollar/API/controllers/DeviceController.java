@@ -1,9 +1,11 @@
 package be.uantwerpen.fti.ei.project.smollar.API.controllers;
 
+import be.uantwerpen.fti.ei.project.smollar.API.models.Fence;
 import be.uantwerpen.fti.ei.project.smollar.API.models.SpaceTimeStamp;
 import com.google.cloud.firestore.Firestore;
 import be.uantwerpen.fti.ei.project.smollar.API.models.Device;
 import be.uantwerpen.fti.ei.project.smollar.API.repositories.DeviceRepository;
+import com.google.cloud.firestore.GeoPoint;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.apache.commons.lang3.BooleanUtils;
 import org.checkerframework.checker.units.qual.A;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.http.HttpStatus;
@@ -57,6 +60,32 @@ public class DeviceController {
         return new ResponseEntity<Device>(device, HttpStatusCode.valueOf(200));
     }
 
+    @GetMapping("/{deviceId}/fence")
+    @Operation(
+            summary = "Get device's fence",
+            description = "Get fence from the device Id",
+            tags = {"Devices"},
+            parameters = {
+                    @Parameter(name = "deviceId", description = "The Id of the device, preferably a UUID string", in = ParameterIn.PATH)
+            },
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "Successfully fetched the fence",
+                            content = @Content(
+                                    schema = @Schema(implementation = Device.class)
+                            )
+                    ),
+                    @ApiResponse(responseCode = "404", description = "The device with the given id does not exist")
+            }
+    )
+    public ResponseEntity getFene(@PathVariable String deviceId) {
+        Device device = deviceRepository.get(deviceId);
+        if (device == null) {
+            return new ResponseEntity<String>("Device not found",  HttpStatusCode.valueOf(404));
+        }
+        return new ResponseEntity<Fence>(device.getFence(), HttpStatusCode.valueOf(200));
+    }
+
     @PostMapping("/{deviceId}")
     @Operation(
             summary = "Create a device",
@@ -96,8 +125,8 @@ public class DeviceController {
         if (deviceRepository.get(deviceId) != null) {
             return new ResponseEntity<String>("Device already exists", HttpStatusCode.valueOf(409));
         }
-        Device device = new Device(deviceId, deviceName, new ArrayList<>(), false);
-        boolean result = deviceRepository.save(device);
+        Device device = new Device(deviceId, deviceName, new ArrayList<>(), false, new Fence());
+        boolean result = deviceRepository.create(device);
         if (!result)
             return new ResponseEntity<String>("Error in pushing resource to databse", HttpStatusCode.valueOf(500));
         return new ResponseEntity<Device>(device, HttpStatusCode.valueOf(201));
@@ -146,7 +175,10 @@ public class DeviceController {
         locations.addAll(spaceTimeStamps);
 
         if (deviceRepository.save(device)) {
-            return new ResponseEntity<Boolean>(device.isCallBack(), HttpStatusCode.valueOf(200));
+            int isCallBack = BooleanUtils.toInteger(device.isCallBack());
+            int fenceInUse = BooleanUtils.toInteger(device.getFence().isInUse());
+            int fenceId = deviceRepository.getFenceMap().get(deviceId).getValue();
+            return new ResponseEntity<String>(isCallBack + "" + fenceInUse + "" + fenceId, HttpStatusCode.valueOf(200));
         }
         return new ResponseEntity<String>("Error in pushing resource to database", HttpStatusCode.valueOf(500));
     }

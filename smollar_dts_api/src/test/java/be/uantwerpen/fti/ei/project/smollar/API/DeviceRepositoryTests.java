@@ -27,7 +27,7 @@ class DeviceRepositoryTests {
 
 		locations.add(new SpaceTimeStamp(Timestamp.now(), new GeoPoint(54.0, 4.00)));
 		Device device = new Device("Test Device", locations);
-		boolean result = repository.save(device);
+		boolean result = repository.create(device);
 		Assertions.assertTrue(result);
 
 		Device receivedDevice = repository.get(device.getDeviceId());
