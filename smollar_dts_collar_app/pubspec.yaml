@@ -42,6 +42,8 @@ dependencies:
   permission_handler: ^10.2.0
   http: ^0.13.5
   audioplayers: ^4.0.1
+  haversine_distance: ^1.2.1
+  great_circle_distance_calculator: ^1.0.4
 
 dev_dependencies:
   flutter_test:
