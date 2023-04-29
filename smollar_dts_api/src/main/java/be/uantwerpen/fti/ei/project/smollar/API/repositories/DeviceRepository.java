@@ -8,6 +8,7 @@ import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -34,11 +35,12 @@ public class DeviceRepository {
         ApiFuture<WriteResult> resultApiFuture = collectionReference.document(documentId).set(device);
         Fence currentFence = get(device.getDeviceId()).getFence();
         if (!fenceMap.containsKey(device.getDeviceId())) {
-            fenceMap.put(device.getDeviceId(), new MutablePair<>(currentFence, 0));
+            fenceMap.put(device.getDeviceId(), new ImmutablePair<>(currentFence, 0));
         } else if (!fenceMap.get(device.getDeviceId()).getKey().equals(currentFence)) {
-               int id = fenceMap.get(documentId).getValue();
-               fenceMap.get(documentId).setValue((id + 1) % 10);
-        }
+            log.info("fence updated since last time");
+            int id = fenceMap.get(documentId).getValue();
+            fenceMap.put(documentId, new ImmutablePair<>(currentFence, (id + 1) %10));
+        } else log.info("fence not updated since last time");
         try {
             log.info("{}--{} saved at{}", collectionName, documentId, resultApiFuture.get().getUpdateTime());
             return true;
@@ -86,6 +88,7 @@ public class DeviceRepository {
         ApiFuture<WriteResult> resultApiFuture = documentReference.delete();
         try {
             if (resultApiFetch.get().exists()) {
+                fenceMap.remove(deviceId);
                 log.info("{}={} deleted at {}", collectionName, deviceId, resultApiFuture.get().getUpdateTime());
                 return true;
             }
