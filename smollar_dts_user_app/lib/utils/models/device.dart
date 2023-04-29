@@ -37,6 +37,7 @@ class Device {
       deviceId: deviceId ?? this.deviceId,
       deviceName: deviceName ?? this.deviceName,
       locations: locations ?? this.locations,
+      comeBack: comeBack ?? this.comeBack,
       fence: fence ?? this.fence,
     );
   }
@@ -58,6 +59,7 @@ class Device {
       deviceName: map["deviceName"],
       locations: locations.map((e) => SpaceTimePoint.fromMap(e)).toList(),
       fence: Fence.fromMap(map["fence"]),
+      comeBack: map["callBack"],
     );
   }
 
