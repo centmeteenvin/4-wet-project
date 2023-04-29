@@ -1,13 +1,11 @@
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smollar_dts/pages/login/login_page.dart';
 import 'package:smollar_dts/utils/services/auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../utils/models/device.dart';
 import '../../utils/services/providers.dart';
-
 
 class Home extends ConsumerWidget {
   const Home({super.key});
@@ -27,7 +25,9 @@ class Home extends ConsumerWidget {
           error: error,
           stackTrace: stackTrace,
         );
-        return const Center(child: Text("An Error occured"),);
+        return const Center(
+          child: Text("An Error occured"),
+        );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
     );
@@ -86,7 +86,7 @@ class DeviceSelector extends ConsumerWidget {
                   ref.read(currentDeviceProvider.notifier).set(data[index]);
                   Navigator.pushNamed(context, "/device");
                 },
-                child: Text(data[index].deviceId),
+                child: Text(data[index].deviceName),
               ),
             ),
           ),
@@ -105,15 +105,20 @@ class ProfilePicture extends ConsumerWidget {
     return user.when(
       data: (data) {
         if (data!.isAnonymous) {
-          return const CircleAvatar(child: Icon(Icons.supervised_user_circle),);
+          return const CircleAvatar(
+            child: Icon(Icons.supervised_user_circle),
+          );
         }
         return CircleAvatar(
           backgroundImage: NetworkImage(data.photoURL!),
         );
       },
       error: (error, stackTrace) {
-        log("Error occured in profilePicture", error: error, stackTrace: stackTrace);
-        return const CircleAvatar(backgroundColor: Colors.red,);
+        log("Error occured in profilePicture",
+            error: error, stackTrace: stackTrace);
+        return const CircleAvatar(
+          backgroundColor: Colors.red,
+        );
       },
       loading: () => const CircularProgressIndicator(),
     );
