@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart';
 
 @immutable
 class Fence {
-  final LocationData anchor;
+  final Position anchor;
   final double distance;
   final bool inUse;
 
@@ -11,7 +12,7 @@ class Fence {
 
   static Fence fromMap(Map<String, dynamic> map) {
     return Fence(
-      anchor: LocationData.fromMap(map["anchor"]),
+      anchor: Position.fromMap(map["anchor"]),
       distance: map["distance"],
       inUse: map["inUse"]
     );

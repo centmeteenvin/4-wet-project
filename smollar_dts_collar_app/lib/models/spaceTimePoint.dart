@@ -3,16 +3,15 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:great_circle_distance_calculator/great_circle_distance_calculator.dart';
-import 'package:location/location.dart';
 import 'package:smollar_dts_collar_app/main.dart';
 
 import 'fence.dart';
 
 class SpaceTimePoint {
-  final LocationData location;
+  final Position location;
   final DateTime dateTime;
 
   SpaceTimePoint(this.location, this.dateTime);
@@ -31,17 +30,17 @@ class SpaceTimePoint {
   } 
 }
 
-class LocationNotifier extends Notifier<LocationData?> {
+class LocationNotifier extends Notifier<Position?> {
   @override
-  LocationData? build() {
+  Position? build() {
     Timer.periodic(const Duration(milliseconds: 500), (timer) { 
-      Location.instance.getLocation().then((value) async {
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((value) async {
         state = value;
         Fence? fence = ref.read(fenceProvider);
         if (fence != null) {
           var distance = calculateDistance(value, fence.anchor);
           ref.read(distanceProvider.notifier).state = distance;
-          if (distance >= fence.distance) {
+          if ( ref.read(settingsProvider).fenceIsActive && distance >= fence.distance) {
             await ref.read(settingsProvider.notifier).comeBack();
           }
         }
@@ -52,6 +51,6 @@ class LocationNotifier extends Notifier<LocationData?> {
 
 }
 
-double calculateDistance(LocationData coordinate1, LocationData coordinate2) {
+double calculateDistance(Position coordinate1, Position coordinate2) {
   return GreatCircleDistance.fromDegrees(latitude1: coordinate1.latitude, longitude1:  coordinate1.longitude, latitude2: coordinate2.latitude, longitude2: coordinate2.longitude).vincentyDistance();
 }

@@ -4,11 +4,11 @@ import 'dart:math' as m;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smollar_dts/utils/models/device.dart';
 import 'package:smollar_dts/utils/models/space_time_point.dart';
 import 'package:smollar_dts/utils/services/firestore.dart';
-import 'package:location/location.dart';
 
 import '../../utils/models/fence.dart';
 import '../../utils/services/providers.dart';
@@ -182,10 +182,10 @@ class FenceEditor extends ConsumerWidget {
                 hintText: currentDevice.fence.distance.toString(),
                 hintStyle: const TextStyle(color: Colors.black)),
             onSubmitted: (value) async {
-              LocationData locationData = await Location.instance.getLocation();
+              Position locationData = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
               LatLng latLng = LatLng(
-                locationData.latitude!,
-                locationData.longitude!,
+                locationData.latitude,
+                locationData.longitude,
               );
               double distance = double.parse(value);
               Fence fence = currentDevice.fence

@@ -1,4 +1,4 @@
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +23,7 @@ final uuidProvider = FutureProvider<String>((ref) async {
 final deviceNameProvider = StateProvider<String>(
   (ref) => "Empty Name",
 );
-final currentLocationProvider = NotifierProvider<LocationNotifier, LocationData?>(LocationNotifier.new);
+final currentLocationProvider = NotifierProvider<LocationNotifier, Position?>(LocationNotifier.new);
 final locationProvider = StateProvider<List<SpaceTimePoint>>((ref) => [],);
 final isRegisterdProvider = StateProvider<bool>((ref) => false);
 final settingsProvider = NotifierProvider<SettingsNotifier, Settings>(SettingsNotifier.new);

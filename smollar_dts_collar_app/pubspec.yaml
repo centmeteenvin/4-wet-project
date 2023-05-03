@@ -44,6 +44,7 @@ dependencies:
   audioplayers: ^4.0.1
   haversine_distance: ^1.2.1
   great_circle_distance_calculator: ^1.0.4
+  geolocator: ^9.0.2
 
 dev_dependencies:
   flutter_test:

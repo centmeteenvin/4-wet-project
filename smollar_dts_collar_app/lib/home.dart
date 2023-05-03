@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 import 'main.dart';
@@ -109,7 +108,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     List<SpaceTimePoint> locations = List.from(ref.read(locationProvider));
 
     //getting current LocationcurrentLocation
-    LocationData currentLocation= ref.read(currentLocationProvider)!;
+    Position currentLocation= ref.read(currentLocationProvider)!;
     SpaceTimePoint spaceTimePoint = SpaceTimePoint(ref.read(currentLocationProvider)!, DateTime.now());
     log(spaceTimePoint.dateTime.toString());
     locations.add(spaceTimePoint);
